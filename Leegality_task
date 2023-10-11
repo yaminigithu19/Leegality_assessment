@@ -1,0 +1,55 @@
+import random
+
+parking_space = {
+    'A': list(range(1, 21)),
+    'B': list(range(21, 41))
+}
+
+def assign_parking_space(vehicle_number):
+    level, spot = None, None
+
+    for key, value in parking_space.items():
+        if value:
+            level = key
+            spot = value.pop()
+            break
+
+    if level and spot:
+        print(f"Assigned parking space for vehicle {vehicle_number}: Level {level}, Spot {spot}")
+        return {'level': level, 'spot': spot}
+    else:
+        print("Parking is full. No available spaces.")
+        return None
+
+def retrieve_parking_spot(vehicle_number):
+    for level, spots in parking_space.items():
+        for spot in range(1, 21):
+            if (level, spot) in parking_space and parking_space[level, spot] == vehicle_number:
+                return {'level': level, 'spot': spot}
+    return None
+
+def main():
+    while True:
+        print("Parking Lot Management System")
+        print("1. Assign Parking Space")
+        print("2. Retrieve Parking Spot")
+        print("3. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            vehicle_number = input("Enter vehicle number: ")
+            assign_parking_space(vehicle_number)
+        elif choice == '2':
+            vehicle_number = input("Enter vehicle number: ")
+            spot = retrieve_parking_spot(vehicle_number)
+            if spot:
+                print(f"Parking spot for vehicle {vehicle_number}: {spot['level']} - {spot['spot']}")
+            else:
+                print(f"Vehicle {vehicle_number} not found.")
+        elif choice == '3':
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
